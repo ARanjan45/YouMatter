@@ -1,0 +1,85 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://neondb_owner:npg_xLNcezGmX18p@ep-patient-king-a1imw3gz-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+}
+
+model User {
+  id               String            @id @default(cuid())
+  clerkId          String            @unique
+  email            String            @unique
+  firstName        String?
+  lastName         String?
+  
+  journalEntries   JournalEntry[]
+  moodTrackers     MoodTracker[]
+  // NEW: Added missing relations for consistency
+  waterIntakes     WaterIntake[]
+  periodTrackers   PeriodTracker[]
+  dailyFeelingLogs DailyFeelingLog[]
+
+}
+
+model JournalEntry {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model MoodTracker {
+  id        String   @id @default(cuid())
+  mood      String
+  notes     String?  @db.Text
+  date      DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+model WaterIntake {
+  id          String   @id @default(cuid())
+  glassesCount Int      @default(0)
+  date        DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+model PeriodTracker {
+  id        String   @id @default(cuid())
+  severity  String
+  notes     String?  @db.Text
+  date      DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+  @@index([userId])
+}
+
+model DailyFeelingLog {
+  id          String   @id @default(cuid())
+  feelingEmoji String
+  notes       String?  @db.Text
+  timestamp   DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
