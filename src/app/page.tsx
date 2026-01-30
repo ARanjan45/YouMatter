@@ -403,10 +403,10 @@ const MentalHealthLanding = () => {
                   <Image
                     src={`https://img.youtube.com/vi/${featuredVideo.youtubeId}/maxresdefault.jpg`}
                     alt={featuredVideo.title}
-                    layout="fill"
-                    objectFit="cover" // Use cover to fill the space
-                    className="group-hover:scale-105 transition-transform duration-300 rounded-lg"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
                   />
+
                   {/* Play button overlay */}
                   <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-all duration-300 rounded-lg opacity-0 group-hover:opacity-100">
                     <div className="bg-emerald-600 hover:bg-emerald-500 rounded-full p-4 shadow-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
@@ -444,7 +444,7 @@ const MentalHealthLanding = () => {
           </div>
         </DialogContent>
       </Dialog>
-      
+
       {/* Footer */}
       <footer id="about" className="bg-zinc-950 border-t border-zinc-800 py-12">
         <div className="container mx-auto px-4">
