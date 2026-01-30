@@ -10,11 +10,11 @@ export default function SignUpPage() {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             {/* Using the Ribbon icon for branding consistency */}
-            <div className="w-16 h-16 bg-gradient-to-br from-sky-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-16 h-16 bg-linear-to-br from-sky-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
               <Ribbon className="w-8 h-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-linear-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">
             Join YouMatter
           </h1>
           <p className="text-zinc-400 mt-2">

@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
+import { Badge } from "@/src/components/ui/badge";
 import { 
   Brain, 
   Users, 
@@ -244,7 +244,7 @@ const MentalHealthEducation = () => {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/60">
+      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-backdrop-filter:bg-zinc-950/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Brain className="h-8 w-8 text-emerald-400" />
@@ -269,7 +269,7 @@ const MentalHealthEducation = () => {
             
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
               Understanding
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-cyan-400">
                 {" "}Mental Health{" "}
               </span>
               Starts Here
@@ -365,7 +365,7 @@ const MentalHealthEducation = () => {
                             <ul className="space-y-2">
                               {condition.symptoms.map((symptom, index) => (
                                 <li key={index} className="text-zinc-400 text-sm flex items-start">
-                                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 mr-2 shrink-0"></div>
                                   {symptom}
                                 </li>
                               ))}
@@ -380,7 +380,7 @@ const MentalHealthEducation = () => {
                             <ul className="space-y-2">
                               {condition.treatments.map((treatment, index) => (
                                 <li key={index} className="text-zinc-400 text-sm flex items-start">
-                                  <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                                  <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-2 mr-2 shrink-0"></div>
                                   {treatment}
                                 </li>
                               ))}
@@ -395,7 +395,7 @@ const MentalHealthEducation = () => {
                             <ul className="space-y-2">
                               {condition.types.map((type, index) => (
                                 <li key={index} className="text-zinc-400 text-sm flex items-start">
-                                  <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 mr-2 flex-shrink-0"></div>
+                                  <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 mr-2 shrink-0"></div>
                                   {type}
                                 </li>
                               ))}
@@ -451,7 +451,7 @@ const MentalHealthEducation = () => {
                       <ul className="space-y-3">
                         {category.signs.map((sign, signIndex) => (
                           <li key={signIndex} className="text-zinc-400 flex items-start">
-                            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 mr-3 shrink-0"></div>
                             {sign}
                           </li>
                         ))}
@@ -461,7 +461,7 @@ const MentalHealthEducation = () => {
                 ))}
               </div>
 
-              <Card className="bg-gradient-to-r from-red-950/50 to-orange-950/50 border-red-900/50">
+              <Card className="bg-linear-to-r from-red-950/50 to-orange-950/50 border-red-900/50">
                 <CardHeader>
                   <CardTitle className="text-red-100 flex items-center">
                     <Phone className="mr-2 h-5 w-5" />
@@ -481,7 +481,7 @@ const MentalHealthEducation = () => {
                       'Substance abuse as a coping mechanism'
                     ].map((sign, index) => (
                       <li key={index} className="text-red-200/90 flex items-start">
-                        <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                        <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 mr-3 shrink-0"></div>
                         {sign}
                       </li>
                     ))}
@@ -542,7 +542,7 @@ const MentalHealthEducation = () => {
                 ))}
               </div>
 
-              <Card className="mt-12 bg-gradient-to-r from-emerald-950/50 to-cyan-950/50 border-emerald-900/50">
+              <Card className="mt-12 bg-linear-to-r from-emerald-950/50 to-cyan-950/50 border-emerald-900/50">
                 <CardHeader>
                   <CardTitle className="text-emerald-100 flex items-center">
                     <Lightbulb className="mr-2 h-5 w-5" />
@@ -559,7 +559,7 @@ const MentalHealthEducation = () => {
                       'Everyone deserves compassionate, non-judgmental care'
                     ].map((takeaway, index) => (
                       <li key={index} className="text-emerald-200/90 flex items-start">
-                        <Star className="w-4 h-4 text-emerald-400 mt-0.5 mr-3 flex-shrink-0" />
+                        <Star className="w-4 h-4 text-emerald-400 mt-0.5 mr-3 shrink-0" />
                         {takeaway}
                       </li>
                     ))}

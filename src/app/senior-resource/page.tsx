@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
 import Link from 'next/link';
 import {
   Ribbon, Youtube, BookOpen, FileText, Loader2, // Existing icons
@@ -29,7 +29,7 @@ interface Video {
 }
 
 const fetchYoutubeVideos = async (query: string): Promise<Video[]> => {
-  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+  const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
   const YOUTUBE_API_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=${encodeURIComponent(query)}&type=video&key=${API_KEY}`;
 
   try {
@@ -115,7 +115,7 @@ const SeniorResourcesPage = () => {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/60">
+      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-backdrop-filter:bg-zinc-950/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Ribbon className="h-8 w-8 text-sky-400" />
@@ -134,7 +134,7 @@ const SeniorResourcesPage = () => {
 
       <main className="container mx-auto px-4 py-8 lg:py-12">
         {/* Main Title and Intro - Updated for seniors */}
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-sky-400">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-linear-to-r from-emerald-400 to-sky-400">
           Senior Mental Health Resources (Ages 65+)
         </h1>
         <p className="text-center text-zinc-400 max-w-2xl mx-auto mb-12">
@@ -157,7 +157,7 @@ const SeniorResourcesPage = () => {
 
         {/* Types of Stress and Solutions - Updated for seniors */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-red-400">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-red-400">
             Navigating the Challenges of Later Life
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

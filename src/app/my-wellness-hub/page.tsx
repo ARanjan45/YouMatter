@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
 import Link from 'next/link';
 import {
   Ribbon,
@@ -27,7 +27,7 @@ import {
   ArrowLeft, // General wellness icon
 } from 'lucide-react';
 import { UserButton, useUser } from '@clerk/nextjs';
-import Chatbot from '@/app/chatbot/chatbot';
+import Chatbot from '@/src/app/chatbot/chatbot';
 
 // --- Interfaces for Tracker Data ---
 interface JournalEntry {
@@ -453,60 +453,55 @@ const WellnessHubPage = () => {
 
   // Function to fetch personalized resources using Gemini API with exponential backoff
   const fetchPersonalizedResource = async () => {
-    if (!resourceQuery.trim()) {
-      setResourceError("Please enter a query to get personalized resources.");
-      return;
-    }
-    setIsLoadingResource(true);
-    setResourceError('');
-    setGeneratedResource('');
+  if (!resourceQuery.trim()) {
+    setResourceError("Please enter a query.");
+    return;
+  }
 
-    const MAX_RETRIES = 3;
-    let retries = 0;
-    let delay = 1000;
+  setIsLoadingResource(true);
+  setGeneratedResource("");
+  setResourceError("");
 
-    while (retries < MAX_RETRIES) {
-      try {
-        let chatHistory = [];
-        chatHistory.push({ role: "user", parts: [{ text: `Generate a short, helpful resource or tip (around 100-150 words) related to mental well-being for a user who is asking about: "${resourceQuery}". Focus on practical advice or a brief explanation. Do not include any disclaimers or conversational filler. Just the resource.` }] });
-        const payload = { contents: chatHistory };
-        const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY; 
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+  try {
+    const response = await fetch("/api/gemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: resourceQuery,
+      }),
+    });
 
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+    const data = await response.json();
 
-        if (response.ok) {
-          const result = await response.json();
-          if (result.candidates && result.candidates.length > 0 &&
-              result.candidates[0].content && result.candidates[0].content.parts &&
-              result.candidates[0].content.parts.length > 0) {
-            const text = result.candidates[0].content.parts[0].text;
-            setGeneratedResource(text);
-            return;
-          } else {
-            setResourceError("Could not generate a resource. Please try a different query or the response structure was unexpected.");
-            return;
-          }
-        } else if (response.status === 429 || response.status >= 500) {
-          retries++;
-          await new Promise(res => setTimeout(res, delay));
-          delay *= 2;
-        } else {
-          throw new Error(`API error: ${response.status} - ${response.statusText}`);
-        }
-      } catch (error: any) {
-        console.error("Error fetching personalized resource:", error);
-        setResourceError(`Failed to fetch resource: ${error.message}. Please try again.`);
-        return;
+    if (!response.ok) {
+      let errorMessage = "Failed to generate resource";
+
+      // 🔥 SAFELY extract error message
+      if (typeof data?.error === "string") {
+        errorMessage = data.error;
+      } else if (typeof data?.error === "object" && data?.error !== null) {
+        errorMessage =
+          data?.error?.message ||
+          JSON.stringify(data.error);
       }
+
+      throw new Error(errorMessage);
     }
-    setResourceError("Failed to fetch resource after multiple attempts. Please try again later.");
+
+    // ✅ SUCCESS
+    setGeneratedResource(data.text);
+  } catch (error: any) {
+    console.error("Error fetching personalized resource:", error);
+    setResourceError(error.message || "Something went wrong");
+  } finally {
     setIsLoadingResource(false);
-  };
+  }
+};
+
+
+
 
 
   if (!isLoaded || !isSignedIn) {
@@ -547,7 +542,7 @@ const WellnessHubPage = () => {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/60">
+      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-backdrop-filter:bg-zinc-950/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Ribbon className="h-8 w-8 text-sky-400" />
@@ -576,7 +571,7 @@ const WellnessHubPage = () => {
         
         </Link>
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-emerald-400">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-10 bg-clip-text text-transparent bg-linear-to-r from-sky-400 to-emerald-400">
           Your Personalized Wellness Hub
         </h1>
 
@@ -594,14 +589,14 @@ const WellnessHubPage = () => {
             </CardHeader>
             <CardContent className="p-0"> 
               <textarea
-                className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 min-h-[120px] text-sm" 
+                className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 min-h-30 text-sm" 
                 placeholder="What's on your mind today?"
                 value={journalEntryContent}
                 onChange={(e) => setJournalEntryContent(e.target.value)}
               ></textarea>
               
               <Button
-                className="mt-4 w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center" 
+                className="mt-4 w-full sm:w-auto px-6 py-2 bg-linear-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center" 
                 onClick={saveJournalEntry}
                 disabled={isSavingJournal || !journalEntryContent.trim()} 
               >
@@ -691,7 +686,7 @@ const WellnessHubPage = () => {
                   <label htmlFor="moodNotes" className="block text-zinc-300 text-sm font-medium mb-2">Optional notes:</label>
                   <textarea
                     id="moodNotes"
-                    className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-amber-500 min-h-[80px] text-sm"
+                    className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-amber-500 min-h-20 text-sm"
                     placeholder="Briefly describe your mood or what affected it..."
                     value={moodNotes}
                     onChange={(e) => setMoodNotes(e.target.value)}
@@ -699,7 +694,7 @@ const WellnessHubPage = () => {
                 </div>
 
                 <Button
-                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
+                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-linear-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
                   onClick={saveMoodEntry}
                   disabled={isSavingMood || !currentMood}
                 >
@@ -782,7 +777,7 @@ const WellnessHubPage = () => {
                   </Button>
                 </div>
                 <Button
-                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
+                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-linear-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
                   onClick={saveWaterIntake}
                   disabled={isSavingWater}
                 >
@@ -869,7 +864,7 @@ const WellnessHubPage = () => {
                   <label htmlFor="periodNotes" className="block text-zinc-300 text-sm font-medium mb-2">Optional notes:</label>
                   <textarea
                     id="periodNotes"
-                    className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-pink-500 min-h-[80px] text-sm"
+                    className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-pink-500 min-h-20 text-sm"
                     placeholder="Any additional notes about your period today..."
                     value={periodNotes}
                     onChange={(e) => setPeriodNotes(e.target.value)}
@@ -877,7 +872,7 @@ const WellnessHubPage = () => {
                 </div>
 
                 <Button
-                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-700 hover:to-red-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
+                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-linear-to-r from-pink-600 to-red-600 hover:from-pink-700 hover:to-red-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
                   onClick={savePeriodEntry}
                   disabled={isSavingPeriod || !periodSeverity}
                 >
@@ -963,7 +958,7 @@ const WellnessHubPage = () => {
                   <label htmlFor="feelingLogNotes" className="block text-zinc-300 text-sm font-medium mb-2">Optional notes:</label>
                   <textarea
                     id="feelingLogNotes"
-                    className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-purple-500 min-h-[80px] text-sm"
+                    className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-purple-500 min-h-20 text-sm"
                     placeholder="Add a brief note about this feeling..."
                     value={feelingLogNotes}
                     onChange={(e) => setFeelingLogNotes(e.target.value)}
@@ -971,7 +966,7 @@ const WellnessHubPage = () => {
                 </div>
 
                 <Button
-                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
+                  className="mt-4 w-full sm:w-auto px-6 py-2 bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-md shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center"
                   onClick={saveFeelingLog}
                   disabled={isSavingFeelingLog || !currentFeelingEmoji}
                 >
@@ -1055,7 +1050,7 @@ const WellnessHubPage = () => {
               <div className="flex items-center space-x-3">
                 <input
                   type="text"
-                  className="flex-grow p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm"
+                  className="grow p-3 bg-zinc-800 border border-zinc-700 rounded-md text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm"
                   placeholder="e.g., 'coping with anxiety', 'mindfulness exercises', 'dealing with stress'"
                   value={resourceQuery}
                   onChange={(e) => setResourceQuery(e.target.value)}

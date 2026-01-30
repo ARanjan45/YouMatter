@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, MessageCircle, Info, Heart, ArrowLeft, Lightbulb, Mail, Shield, Brain} from 'lucide-react';
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { Phone, MessageCircle, Info, Heart, ArrowLeft, Lightbulb, Mail, Shield, Brain } from 'lucide-react';
 
 const MentalHealthHelplines = () => {
   const userPhoneNumber = "+91 8102198960";
@@ -31,7 +31,7 @@ const MentalHealthHelplines = () => {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-inter">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-[backdrop-filter]:bg-zinc-950/60">
+      <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur supports-backdrop-filter:bg-zinc-950/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Brain className="h-8 w-8 text-emerald-400" />
@@ -66,9 +66,9 @@ const MentalHealthHelplines = () => {
       <section className="py-16 bg-zinc-900/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Your Personal Support Line</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Personal Support Line</h2>
             <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
-              This is your dedicated support number. Share it with those who need to reach you directly for support.
+              This is our dedicated support number. Share it with those who need to reach us directly for support.
             </p>
           </div>
           <div className="flex justify-center">
@@ -77,18 +77,18 @@ const MentalHealthHelplines = () => {
                 <div className="text-5xl mb-4 text-emerald-400 flex justify-center">
                   <Heart className="h-12 w-12" />
                 </div>
-                <CardTitle className="text-zinc-100 text-3xl">Your Number</CardTitle>
+                <CardTitle className="text-zinc-100 text-3xl">Our Number</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-4xl font-bold text-emerald-300 mb-4">{userPhoneNumber}</p>
-                <Button 
+                <Button
                   onClick={() => window.location.href = `tel:${userPhoneNumber.replace(/\s/g, '')}`}
                   className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 text-lg rounded-full"
                 >
-                  <Phone className="mr-2 h-5 w-5" /> Call Me
+                  <Phone className="mr-2 h-5 w-5" /> Call Us
                 </Button>
                 <p className="text-zinc-500 text-sm mt-4">
-                  (Note: This is your personal number for direct support.)
+                  (Note: This is Our personal number for direct support.)
                 </p>
               </CardContent>
             </Card>
@@ -156,9 +156,9 @@ const MentalHealthHelplines = () => {
                 <CardContent className="flex flex-col space-y-2">
                   <div className="text-zinc-300 font-semibold text-lg">{helpline.number}</div>
                   <div className="text-zinc-500 text-sm">Availability: {helpline.availability}</div>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="mt-4 border-emerald-600 text-emerald-300 hover:bg-emerald-900/50"
                     onClick={() => window.location.href = `tel:${helpline.number.replace(/\s/g, '').replace(/\//g, '')}`}
                   >
@@ -198,9 +198,9 @@ const MentalHealthHelplines = () => {
                 <CardContent className="flex flex-col space-y-2">
                   <div className="text-zinc-300 font-semibold text-lg">{helpline.number}</div>
                   <div className="text-zinc-500 text-sm">Availability: {helpline.availability}</div>
-                  <Button 
-                    variant="destructive" 
-                    size="sm" 
+                  <Button
+                    variant="destructive"
+                    size="sm"
                     className="mt-4 px-6 py-3 text-lg rounded-full"
                     onClick={() => window.location.href = `tel:${helpline.number.replace(/\s/g, '').replace(/\//g, '')}`}
                   >
@@ -228,22 +228,21 @@ const MentalHealthHelplines = () => {
                 Know of a valuable mental health helpline that isn't listed here? We'd love to hear about it! Your suggestions help us keep our resources comprehensive and up-to-date for everyone.
               </p>
               <a
-                href="mailto:paulpriyanshu704@gmail.com?subject=New%20Helpline%20Suggestion&body=Helpline%20Name:%0AContact%20Number:%0ADescription:%0AAvailability:"
+                href="https://mail.google.com/mail/?view=cm&to=beliefinaprajita@gmail.com&su=New Helpline Suggestion&body=Helpline Name:%0D%0AContact Number:%0D%0ADescription:%0D%0AAvailability:"
                 target="_blank"
-                rel="noopener noreferrer"
-                >
+              >
                 <Button
                   variant="outline"
                   size="lg"
                   className="border-purple-600 text-purple-300 hover:bg-purple-900/50"
                 >
-                <Mail className="mr-2 h-5 w-5" /> Suggest Now
-              </Button>
+                  <Mail className="mr-2 h-5 w-5" /> Suggest Now
+                </Button>
               </a>
               <p className="text-zinc-500 text-sm mt-4">
                 (Clicking "Suggest Now" will open your email client.)
               </p>
-            
+
             </CardContent>
           </Card>
         </div>
@@ -289,7 +288,7 @@ const MentalHealthHelplines = () => {
                 <span className="text-xs">Confidential & Secure</span>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4 text-zinc-200">Crisis Resources</h4>
               <div className="space-y-2 text-sm">
@@ -298,7 +297,7 @@ const MentalHealthHelplines = () => {
                 <div className="text-zinc-400">112 - Emergency (India)</div>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4 text-zinc-200">Quick Links</h4>
               <div className="space-y-2 text-sm">
@@ -308,7 +307,7 @@ const MentalHealthHelplines = () => {
                 <a href="#" className="text-zinc-400 hover:text-zinc-200 block">About Us</a>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4 text-zinc-200">Legal</h4>
               <div className="space-y-2 text-sm">
@@ -319,7 +318,7 @@ const MentalHealthHelplines = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="border-t border-zinc-800 mt-8 pt-8 text-center text-zinc-500 text-sm">
             <p>© Developed with love by Aprajita</p>
           </div>

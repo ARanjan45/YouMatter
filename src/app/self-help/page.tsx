@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { Badge } from "@/src/components/ui/badge";
 import { Loader2, Brain, BookOpen, MessageCircle, ArrowLeft, Heart, Users, Briefcase, Frown, Sparkles, Sun, Smile, CloudRain, Clock, Ghost } from 'lucide-react';
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/src/components/ui/scroll-area";
 
 // --- DATA: Quiz Definitions ---
 const quizzes = [
@@ -388,7 +388,7 @@ Remember, you don't have to go through this alone. Support is available, and tak
   const renderQuizSelection = () => (
     <>
       <header className="w-full max-w-7xl flex flex-col items-center justify-center mb-10 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-sky-400">
+        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-emerald-400 to-sky-400">
           Self-Help Quizzes
         </h1>
         <p className="mt-4 text-zinc-400 max-w-xl">
@@ -564,7 +564,7 @@ Remember, you don't have to go through this alone. Support is available, and tak
           </p>
         </CardHeader>
         <CardContent>
-          <ScrollArea className="h-[500px] pr-4">
+          <ScrollArea className="h-125 pr-4">
             <div className="space-y-4">
               {report && (
                 <div 

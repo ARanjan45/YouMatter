@@ -1,5 +1,5 @@
 // app/api/feeling/route.ts
-import prisma from '@/lib/prisma';
+import prisma from '@/src/lib/prisma';
 import { currentUser } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
