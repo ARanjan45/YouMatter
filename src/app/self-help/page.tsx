@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card";
-import { Badge } from "@/src/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Loader2, Brain, BookOpen, MessageCircle, ArrowLeft, Heart, Users, Briefcase, Frown, Sparkles, Sun, Smile, CloudRain, Clock, Ghost } from 'lucide-react';
-import { ScrollArea } from "@/src/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // --- DATA: Quiz Definitions ---
 const quizzes = [

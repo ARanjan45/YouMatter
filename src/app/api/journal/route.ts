@@ -1,5 +1,5 @@
 // app/api/journal/route.ts
-import prisma from '@/src/lib/prisma';
+import prisma from '@/lib/prisma';
 import { currentUser } from '@clerk/nextjs/server'; // Correct import for App Router
 import { NextResponse } from 'next/server';
 

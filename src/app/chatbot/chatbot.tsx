@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { X, Send, Loader2, Bot, User as UserIcon, Youtube } from "lucide-react";
 
 interface Video {

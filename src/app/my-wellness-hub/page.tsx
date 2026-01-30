@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from 'next/link';
 import {
   Ribbon,
@@ -27,7 +27,7 @@ import {
   ArrowLeft, // General wellness icon
 } from 'lucide-react';
 import { UserButton, useUser } from '@clerk/nextjs';
-import Chatbot from '@/src/app/chatbot/chatbot';
+import Chatbot from '@/app/chatbot/chatbot';
 
 // --- Interfaces for Tracker Data ---
 interface JournalEntry {

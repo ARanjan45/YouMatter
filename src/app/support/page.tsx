@@ -1,8 +1,8 @@
 "use client";
 
 import React from 'react';
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, MessageCircle, Info, Heart, ArrowLeft, Lightbulb, Mail, Shield, Brain } from 'lucide-react';
 
 const MentalHealthHelplines = () => {

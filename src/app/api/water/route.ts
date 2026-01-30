@@ -1,5 +1,5 @@
 // app/api/water/route.ts
-import prisma from '@/src/lib/prisma';
+import prisma from '@/lib/prisma';
 import { currentUser } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     // Upsert the water intake entry: one entry per user per day
-    const waterEntry = await prisma.WaterIntake.upsert({
+    const waterEntry = await prisma.waterIntake.upsert({
       where: {
         userId_date: {
           userId: dbUser.id,
